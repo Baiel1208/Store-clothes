@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth, messages
+from django.contrib.auth.decorators import login_required
+
 
 from . import forms 
 from apps.product.models import Basket
@@ -34,6 +36,7 @@ def register(request):
     return render(request, 'users/register.html', context)
 
 
+@login_required
 def profile(request):
     if request.method == 'POST':
         form = forms.UserProfileForm(instance=request.user, data=request.POST, files=request.FILES)
@@ -44,9 +47,12 @@ def profile(request):
             print(form.errors)
     else:
         form = forms.UserProfileForm(instance=request.user)
+
+    baskets = Basket.objects.filter(user=request.user)
+
     context = {'title': 'Store - Профиль',
                 'form': form,
-                'baskets': Basket.objects.all(),
+                'baskets': baskets,
     }
     return render(request, 'users/profile.html', context)
 
