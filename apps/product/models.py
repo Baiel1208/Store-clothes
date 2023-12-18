@@ -17,6 +17,11 @@ class ProductCategory(models.Model):
         return self.name
 
 
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+
+
 class Product(models.Model):
     name = models.CharField(
         max_length=255,
@@ -41,6 +46,11 @@ class Product(models.Model):
 
     def __str__(self) -> str:
         return f'Продукт: {self.name} | Категория: {self.category.name}'
+
+
+    class Meta:
+        verbose_name = 'Продукт'
+        verbose_name_plural = 'Продукты'
 
 
 class BasketQuerySet(models.QuerySet):
