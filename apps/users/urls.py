@@ -1,15 +1,13 @@
 from django.urls import path
-from django.conf.urls.static import static
-from django.conf import settings
+from django.contrib.auth.decorators import login_required
+
 
 from apps.users import views
 
 urlpatterns = [
-    path('login/', views.login, name='login'),
-    path('register/', views.register, name='register'),
-    path('profile/', views.profile, name='profile'),
+    path('login/', views.UserLoginView.as_view(), name='login'),
+    path('register/', views.UserRegisterView.as_view(), name='register'),
+    path('profile/<int:pk>/', login_required(views.UserProfileView.as_view()), name='profile'),
     path('logout/', views.logout, name='logout'),
 
 ]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

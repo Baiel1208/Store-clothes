@@ -16,7 +16,7 @@
                     {% else %} {% static "vendor/img/users/default_avatar.jpg" %}
                     {% endif %}">
             </div>
-            <form action="{% url "profile" %}" metho="post" enctype="multipart/form-data">
+            <form action="{% url "profile" user.id %}" metho="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-row">
                     <div class="col-lg-6">

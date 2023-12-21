@@ -4,11 +4,13 @@ from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 
 from apps.product import models as m
+from apps.common.views import TitleMixin
 
 
 # Create your views here.
-class IndexView(TemplateView):
+class IndexView(TitleMixin, TemplateView):
     template_name = 'index.html'
+    title = 'Магазин'
 
 
     def get_context_data(self, **kwargs):
@@ -17,10 +19,11 @@ class IndexView(TemplateView):
         return context
 
 
-class ProductsListView(ListView):
+class ProductsListView(TitleMixin, ListView):
     model = m.Product
     template_name = 'products.html'
     paginate_by = 3
+    title = 'Магазин Каталог'
 
 
     def get_queryset(self):
