@@ -1,15 +1,14 @@
-from typing import Any
-from django.shortcuts import render, redirect
-from django.contrib import auth
+from django.http import HttpResponseRedirect
+from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
 
 
 from . import forms 
 from apps.product.models import Basket
-from .models import User
+from .models import User, EmailVerification
 from apps.common.views import TitleMixin
 
 # Create your views here.
@@ -52,9 +51,24 @@ class UserProfileView(TitleMixin, UpdateView):
         return context
 
 
-def logout(request):
-    auth.logout(request)
-    return redirect('index')
+class EmailVerificationView(TemplateView, TitleMixin):
+    title = 'Store - Подтверждение по элетронной почте'
+    template_name = 'users/email_verification.html'
+
+
+    def get(self, request, *args, **kwargs):
+        code = kwargs['code']
+        user = User.objects.get(email=kwargs['email'])
+        email_verifications = EmailVerification.objects.filter(user=user, code=code)
+        if email_verifications.exists() and not email_verifications.first().is_expired():
+            user.is_verified_email = True
+            user.save()
+            return super(EmailVerificationView, self).get()
+        else:
+            return HttpResponseRedirect(reverse('index'))
+# def logout(request):
+#     auth.logout(request)
+#     return redirect('index')
 
 
 # def login(request):
