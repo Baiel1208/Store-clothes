@@ -67,6 +67,8 @@ class EmailVerificationView(TemplateView, TitleMixin):
             return super(EmailVerificationView, self).get()
         else:
             return HttpResponseRedirect(reverse('index'))
+
+
 # def logout(request):
 #     auth.logout(request)
 #     return redirect('index')

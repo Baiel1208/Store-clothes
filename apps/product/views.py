@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import HttpResponseRedirect
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
+from django.core.cache import cache
 
 from apps.common.views import TitleMixin
 from apps.product import models as m
@@ -17,7 +18,6 @@ class IndexView(TitleMixin, TemplateView):
         context = super(IndexView, self).get_context_data()
         context['title'] = 'Магазин'
         return context
-
 
 class ProductsListView(TitleMixin, ListView):
     model = m.Product
@@ -35,7 +35,12 @@ class ProductsListView(TitleMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(ProductsListView, self).get_context_data()
         context['title'] = 'Магазин Каталог'
-        context['categories'] = m.ProductCategory.objects.all()
+        categories = cache.get('categories')
+        if not categories:
+            context['categories'] = m.ProductCategory.objects.all()
+            cache.set('categories', context['categories'], 30)
+        else:
+            context['categories'] = categories
         return context
 
 
