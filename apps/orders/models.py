@@ -27,4 +27,9 @@ class Order(models.Model):
 
 
     def __str__(self):
-        return f'Заказ №{set.id}. {self.first_name} {self.last_name}'
+        return f'Заказ №{self.id}.  {self.first_name}  {self.last_name}'
+
+
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
