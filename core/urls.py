@@ -18,7 +18,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from django import urls
 from apps.product.views import IndexView
 
 urlpatterns = [
@@ -27,6 +26,8 @@ urlpatterns = [
     path('products/', include('apps.product.urls')),
     path('users/', include('apps.users.urls')),
     path('accounts/', include('allauth.urls')),
+    path('orders/', include('apps.orders.urls')),
+
 
 ]
 
