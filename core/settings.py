@@ -33,7 +33,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-DOMAIN_NAME = 'http://locolhost:8000'
+DOMAIN_NAME = 'http://127.0.0.1:8000/'
 
 
 # Application definition
@@ -214,3 +214,8 @@ SOCIALACCOUNT_PROVIDERS = {
 # Celery Configuration Options
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
 CELELRY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
+
+# Stripe
+STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET')
