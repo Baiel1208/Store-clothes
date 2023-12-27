@@ -11,6 +11,7 @@ from django.conf import settings
 
 
 from apps.orders.forms import OrderForm
+from apps.orders.models import Order
 from apps.common.views import TitleMixin
 from apps.product.models import Basket
 
@@ -88,6 +89,7 @@ def stripe_webhook_view(request):
     return HttpResponse(status=200)
 
 
-def fulfill_order(line_items):
-    # TODO: fill me in
-    print("Fulfilling order")
+def fulfill_order(session):
+    order_id = int(session.metadata.order_id)
+    order = Order.objects.get(id=order_id)
+    order.update_after_payment()
