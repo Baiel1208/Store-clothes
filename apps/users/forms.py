@@ -3,8 +3,9 @@ from django import forms
 from django.contrib.auth.forms import (AuthenticationForm, UserChangeForm,
                                        UserCreationForm)
 
-from . import models as m
 from apps.users.tasks import send_emailverication
+
+from . import models as m
 
 
 class UserLoginForm(AuthenticationForm):

@@ -1,11 +1,10 @@
 from collections.abc import Iterable
-import stripe
 
-from django.db import models
+import stripe
 from django.conf import settings
+from django.db import models
 
 from apps.users.models import User
-
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 

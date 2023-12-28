@@ -19,8 +19,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-from apps.product.views import IndexView
 from apps.orders.views import stripe_webhook_view
+from apps.product.views import IndexView
 
 urlpatterns = [
     path('admin/', admin.site.urls),

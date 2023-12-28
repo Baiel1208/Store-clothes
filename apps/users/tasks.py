@@ -6,6 +6,7 @@ from django.utils.timezone import now
 
 from . import models as m
 
+
 @shared_task
 def send_emailverication(user_id):
     user = m.User.objects.get(id=user_id)
